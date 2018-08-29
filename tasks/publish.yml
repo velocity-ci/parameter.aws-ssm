@@ -4,7 +4,7 @@ name: publish
 parameters:
   - use: https://github.com/velocity-ci/parameters.aws-ssm/releases/download/0.1.0/aws-ssm
     arguments:
-      name: "/velociyci/github-release-token"
+      name: /velocityci/github-release-token
     exports:
       value: github_release_token
 
@@ -28,5 +28,5 @@ steps:
     type: run
     image: civelocity/run.github-release
     environment:
-      GITHUB_RELEASE_TOKEN: ${github_release_token}
+      GITHUB_ACCESS_TOKEN: ${github_release_token}
     command: velocity-ci parameters.aws-ssm ${GIT_DESCRIBE} dist/aws-ssm
