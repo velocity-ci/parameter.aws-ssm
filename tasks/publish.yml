@@ -2,7 +2,7 @@ description: "Builds and publishes binary to GitHub Releases"
 name: publish
 
 parameters:
-  - use: https://github.com/velocity-ci/parameters.aws-ssm/releases/download/0.1.0/aws-ssm
+  - use: https://github.com/velocity-ci/parameter.aws-ssm/releases/download/0.1.0/aws-ssm
     arguments:
       name: /velocityci/github-release-token
     exports:
@@ -12,13 +12,13 @@ steps:
   - description: Install dependencies
     type: run
     image: vjftw/go-dep:1.10
-    mountPoint: /go/src/github.com/velocity-ci/parameters.aws-ssm
+    mountPoint: /go/src/github.com/velocity-ci/parameter.aws-ssm
     command: dep ensure -v
 
   - description: Build binary
     type: run
     image: golang:1.10-alpine
-    mountPoint: /go/src/github.com/velocity-ci/parameters.aws-ssm
+    mountPoint: /go/src/github.com/velocity-ci/parameter.aws-ssm
     environment:
       CGO_ENABLED: 0
       GOOS: linux
@@ -29,4 +29,4 @@ steps:
     image: civelocity/run.github-release
     environment:
       GITHUB_ACCESS_TOKEN: ${github_release_token}
-    command: velocity-ci parameters.aws-ssm ${GIT_DESCRIBE} dist/aws-ssm
+    command: velocity-ci parameter.aws-ssm ${GIT_DESCRIBE} dist/aws-ssm
